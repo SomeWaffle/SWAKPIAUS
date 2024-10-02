@@ -1,14 +1,11 @@
-# As our organization suggests, we used mostly AI to make an app that will auto install packages for you.
-# Interestingly enough it works beautifully with some manual programming too!
-
 import sys
 import time
 import os
 import distro  # To detect the Linux distribution
 import subprocess  # To run bash files
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QComboBox, QPushButton, QLabel, QListWidget, QListWidgetItem, QCheckBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QComboBox, QPushButton, QLabel, QListWidget, QListWidgetItem, QCheckBox, QHBoxLayout
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon, QPixmap  # Import QIcon and QPixmap
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtGui import QFont
 
 class LinuxApp(QMainWindow):
@@ -16,8 +13,11 @@ class LinuxApp(QMainWindow):
         super().__init__()
 
         # Set window size
-        self.setWindowTitle("SWAKPIAUS 0.0.5")
+        self.setWindowTitle("SWAKPIAUS 1.0.5 - By WaffleCode Labs")
         self.setGeometry(100, 100, 1280, 720)
+        pixmap = QPixmap("bin/icons/SWAKPIAUS_Logo.png")
+        pixmap = pixmap.scaled(64, 64, Qt.KeepAspectRatio, Qt.SmoothTransformation)  # Resize to 64x64 pixels
+        self.setWindowIcon(QIcon(pixmap))
 
         # Main widget and layout
         self.central_widget = QWidget()
@@ -25,12 +25,14 @@ class LinuxApp(QMainWindow):
 
         self.layout = QVBoxLayout()
 
-        # Detect current Linux distribution
+        # Detect current Linux distribution and desktop environment
         current_distro = distro.id()
+        linux_version = distro.version()
+        desktop_env = os.environ.get('XDG_CURRENT_DESKTOP', 'Unknown')
 
         # Create a combo box with Linux distributions
         self.distro_combo = QComboBox()
-        linux_distros = ["ubuntu", "debian", "fedora", "arch", "centos", "manjaro", "opensuse"]
+        linux_distros = ["ubuntu", "debian", "fedora", "arch"] # "centos", "manjaro", "opensuse" are not supported yet.
 
         recommended_index = 0  # Store the index of the recommended distro
 
@@ -59,10 +61,20 @@ class LinuxApp(QMainWindow):
         self.layout.addWidget(QLabel("Select your package:"))
         self.layout.addWidget(self.package_list)
 
+        # Create a layout for the advanced options and Linux information
+        advanced_layout = QHBoxLayout()
+
         # Create a checkbox for Advanced options
         self.advanced_checkbox = QCheckBox("Show Extra Big/Extremely Small Packages")
         self.advanced_checkbox.stateChanged.connect(self.toggle_advanced_options)
-        self.layout.addWidget(self.advanced_checkbox)
+        advanced_layout.addWidget(self.advanced_checkbox)
+
+        # Add a label to display the Linux version and desktop environment
+        self.linux_info_label = QLabel(f"Version: {current_distro} {linux_version}, Desktop: {desktop_env}")
+        advanced_layout.addWidget(self.linux_info_label)
+
+        # Add the advanced layout to the main layout
+        self.layout.addLayout(advanced_layout)
 
         # Add hidden advanced entries (initially hidden)
         self.advanced_options = ["Micro", "Extra Small", "Extra Large"]
@@ -162,7 +174,7 @@ class LinuxApp(QMainWindow):
 
         # Run the bash script with the selected distro and package as arguments
         try:
-            subprocess.run(['bash', 'install.sh', selected_distro, selected_package], check=True)
+            subprocess.run(['bash', 'bin/install.sh', selected_distro, selected_package], check=True)
             print("Bash script executed successfully!")
         except subprocess.CalledProcessError as e:
             print(f"An error occurred while running the script: {e}")
