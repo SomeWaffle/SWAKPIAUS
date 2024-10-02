@@ -1,8 +1,9 @@
+**Cool stuff coming soon... just wait <3**
+
 # SWAKPIAUS - Scripts to install packages on Kubuntu - KDE Neon
 SWAKPIAUS also known as Some Waffles Auto-Kubuntu Package Installer &amp; Apt Update Script, is a script library for KDE Neon & Kubuntu that gets updated depending on how new packages get. You get **5 choices** to choose from on how you want to install stuff, *you are the owner of your own operating system* and the scripts are just there to waste less time searching for packages all night long. No like seriously, *I had to do that and it was really unfunny*. So I decided to come up with scripts that will auto install apps for you, from Minimal to Massive. And the bigger the shell, the more the packages are gonna weigh on your system.
 
 Before you call me out for checking the scripts and seeing mostly "echos" doesn't meant that time has been put into this, and I am not really a programmer but I know the tinest bit, so I can only do so much, maybe in the future ill turn these into actual packages you can just download using ```sudo apt install swakpiaus-minimal``` but that's if I get to understand linux a bit more.
-
 
 
 ## How do I use this awesome script that I just downloaded?
@@ -25,4 +26,4 @@ Yes, in the future we will support installing apps on Arch, Mint, OpenSuse and o
 Yes there will be indeed a UI version one day where you can click what kind of category or what kind of apps you want to install. However, with the current knowledge and the power of this team, we are not intelligent enough to program a whole UI for you to just be moving in.
 
 
-(This Project is being maintained by @somewaffle & @jhwindle)
+(This Project is being maintained by WaffleCode Labs)
